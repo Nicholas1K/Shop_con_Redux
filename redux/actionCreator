@@ -1,0 +1,24 @@
+import {
+  CART_ITEM_ACTION,
+  CART_ITEM_REMOVE_ACTION,
+} from './action';
+
+/*--------------------------------------------------------
+    ACTIONCREATOR PER AGGIUNGERE UN ELEMENTO AL CARRELLO
+--------------------------------------------------------*/
+export const cartItems = (item) => {
+    return{
+        type:CART_ITEM_ACTION.DATA_SUCCESS,
+        payload:{item},
+    }
+    
+};
+/*--------------------------------------------------------
+    ACTIONCREATOR PER ELIMINARE UN ELEMENTO AL CARRELLO
+--------------------------------------------------------*/
+export const cartItemsRemove = (itemId) =>{
+    return{
+        type:CART_ITEM_REMOVE_ACTION.DATA_SUCCESS,
+        payload:{itemId},
+    }
+};
