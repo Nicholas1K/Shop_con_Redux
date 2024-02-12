@@ -1,0 +1,6 @@
+export const CART_ITEM_ACTION = {
+  DATA_SUCCESS: 'cart_success'
+};
+export const CART_ITEM_REMOVE_ACTION = {
+  DATA_SUCCESS: 'cart_item_remove_success',
+};
