@@ -1,0 +1,54 @@
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import {Colors} from '../theme/theme';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
+
+const Carrello = ({prodotti,goTo}) => {
+return (
+  <View>
+    <View style={styles.conCart}>
+      <TouchableOpacity style={styles.touchContCart} onPress={goTo}>
+        <View style={styles.conCart}>
+          <View>
+            <Image
+              style={styles.styleImgCart}
+              source={require('../images/loghi/loghi_menu/carrello.png')}
+            />
+          </View>
+          <View>
+            <Text style={styles.styleNumeri}>({prodotti})</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+  </View>
+);
+};
+const styles = StyleSheet.create({
+  conCart: {
+    flexDirection: 'row',
+    marginTop: '2%',
+    marginBottom: '2%',
+  },
+  touchContCart: {},
+  styleImgCart: {
+    width: 25,
+    height: 25,
+    marginLeft: 30,
+    tintColor: Colors.hotel,
+  },
+  styleNumeri: {
+    fontSize: RFValue(10),
+    margin: 5,
+  },
+});
+export default Carrello;
