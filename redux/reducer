@@ -1,0 +1,58 @@
+import {
+  CART_ITEM_ACTION,
+  CART_ITEM_REMOVE_ACTION,
+} from './action';
+
+const initStateCart = {
+  elementiSelezionati: [],
+  cart: '0',
+};
+
+export const cartReducer = (state = initStateCart, action) => {
+  switch (action.type) {
+    //qui aggiungo un nuovo elemento
+    case CART_ITEM_ACTION.DATA_SUCCESS:
+      const {item} = action.payload;
+
+      return {
+        ...state,
+        //inserisco all'interno di elementiSelezionati la copia dello stato originale, più il nuovo elemento
+        elementiSelezionati: [...state.elementiSelezionati, item],
+        //prendo lo stato corrente di cart e incremento con +1 con il parseInt prima da stringa lo faccio diventare numero, poi aggiungo un numero e in fine lo faccio ritornare stringa con toString
+        cart: (parseInt(state.cart) + 1).toString(),
+      };
+
+    case CART_ITEM_REMOVE_ACTION.DATA_SUCCESS:
+        const {itemId} = action.payload;
+
+      // Trova l'indice dell'elemento da rimuovere
+      const indexToRemove = state.elementiSelezionati.findIndex(
+        elemento => elemento.item.id === itemId,
+      );
+
+      //il metodo findeIndex restituisce -1 se non trova l'elemento
+      if (indexToRemove !== -1) {
+        // Crea una nuova array senza l'elemento da rimuovere
+        const newElementiSelezionati = [
+            //crea un nuovo array dal primo elemento fino all'elemento da eliminare escluso
+          ...state.elementiSelezionati.slice(0, indexToRemove),
+          //crea un altro array da l'elemento da eliminare escluso in poi
+          ...state.elementiSelezionati.slice(indexToRemove + 1),
+          //in questa maniera ho un nuovo array con tutti gli elementi tranne l'elemento eliminato
+        ];
+
+        return {
+          ...state,
+          //in questa maniera inserisco il nuovo array all'interno di elementiSelezionati
+          elementiSelezionati: newElementiSelezionati,
+          cart: (parseInt(state.cart) - 1).toString(),
+        };
+      } else {
+        // Nel caso in cui l'elemento non sia stato trovato, ritorna lo stato senza modifiche
+        return state;
+      }
+
+    default:
+      return state;
+  }
+};
