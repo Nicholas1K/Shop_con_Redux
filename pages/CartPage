@@ -1,0 +1,120 @@
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import {Colors} from '../theme/theme';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import NavbarCustom from '../component/NavbarCustom';
+import DrawerMenuCustom from '../component/DrawerMenuCustom';
+import BottomTabMenuCustom from '../component/BottomTabMenuCustom';
+import CardSemplice from '../component/CardSemplice';
+import Carrello from '../component/Carrello';
+import {useDispatch, useSelector} from 'react-redux';
+import {cartItemsRemove} from '../redux/actionCreator';
+import {RFValue} from 'react-native-responsive-fontsize';
+import ButtonGeneral from '../component/ButtonGeneral';
+
+const CartPage = () => {
+
+     const dispatch = useDispatch();
+
+    const cart = useSelector(state => state.cartReducer.cart);
+    const elementiSelezionati = useSelector(state => state.cartReducer.elementiSelezionati);
+
+    function removeItem(itemId){
+        dispatch(cartItemsRemove(itemId))
+        console.log(itemId)
+    }
+
+    //CON IL REDUCE PRENDO TUTTI GLI ELEMENTI CORRISPONDENTI A PREZZO E LI SOMMO TRA LORO
+    const totale = elementiSelezionati.reduce((acc,item)=> acc + parseInt(item.item.prezzo),0);
+
+return (
+  <>
+    <NavbarCustom pageTitol={'Carrello'} />
+    <DrawerMenuCustom />
+    <Carrello prodotti={cart} />
+    <View style={styles.viewFlat}>
+      <FlatList
+        data={elementiSelezionati}
+        keyExtractor={item => item.id}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => {
+          return (
+            <View style={styles.contGeneralCart}>
+              <View>
+                <Image style={styles.cartImg} source={item.item.image} />
+              </View>
+              <View>
+                <Text style={styles.titleCart}>{item.item.titolo}</Text>
+              </View>
+              <View>
+                <Text style={styles.titleCart}>{item.item.prezzo} €</Text>
+              </View>
+              <View>
+                <TouchableOpacity onPress={() => removeItem(item.item.id)}>
+                  <Image
+                    style={styles.trash}
+                    source={require('../images/loghi/loghi_menu/cestino.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        }}
+      />
+    </View>
+    <View style={styles.totCont}>
+      <Text style={styles.totTXT}>Totale {totale} €</Text>
+    </View>
+    <ButtonGeneral titol={'Paga'}/>
+    <BottomTabMenuCustom />
+  </>
+);
+};
+const styles = StyleSheet.create({
+  viewFlat: {
+    height: '50%',
+  },
+  contGeneralCart: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    padding: '1%',
+  },
+  cartImg: {
+    width: 30,
+    height: 40,
+    borderRadius: 5,
+  },
+  titleCart: {
+    color: 'gray',
+    fontSize: RFValue(14),
+    fontWeight: '700',
+  },
+  trash: {
+    width: 20,
+    height: 20,
+  },
+  totCont: {
+    borderTopWidth: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  totTXT: {
+    color: 'gray',
+    fontSize: RFValue(13),
+    fontWeight: '700',
+    padding: 10,
+    marginRight: '22%',
+  },
+});
+export default CartPage;
