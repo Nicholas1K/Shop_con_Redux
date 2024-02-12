@@ -1,0 +1,421 @@
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {Colors} from '../theme/theme';
+import {useNavigation} from '@react-navigation/native';
+import DrawerMenuCustom from '../component/DrawerMenuCustom';
+import BottomTabMenuCustom from '../component/BottomTabMenuCustom';
+import NavbarCustom from '../component/NavbarCustom';
+import CardShop from '../component/CardShop';
+import {useDispatch, useSelector} from 'react-redux';
+import {cartItems} from '../redux/actionCreator';
+import Carrello from '../component/Carrello';
+import {RFValue} from 'react-native-responsive-fontsize';
+
+const Shop = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const data_bellezza = [
+    {
+      id: '1',
+      image: require('../images/prod_bellezza/prodotto_due.jpeg'),
+      titolo: 'Crema Bellezza',
+      testo:
+        'Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.',
+      prezzo: '20',
+    },
+    {
+      id: '2',
+      image: require('../images/prod_bellezza/prodotto_tre.jpeg'),
+      titolo: 'Lozione Bellezza',
+      testo: 'testo prodotto',
+      prezzo: '20',
+    },
+    {
+      id: '3',
+      image: require('../images/prod_bellezza/prodotto_uno.jpeg'),
+      titolo: 'Gel Bellezza',
+      testo: 'testo prodotto',
+      prezzo: '20',
+    },
+  ];
+
+  const data_curaCapelli = [
+    {
+      id: '4',
+      image: require('../images/prod_curaCapelli/cura_due.jpeg'),
+      titolo: 'Dream Mask',
+      testo:
+        'Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.',
+      prezzo: '20',
+    },
+    {
+      id: '5',
+      image: require('../images/prod_curaCapelli/cura_tre.jpeg'),
+      titolo: 'Shampoo dream',
+      testo: 'testo prodotto',
+      prezzo: '20',
+    },
+    {
+      id: '6',
+      image: require('../images/prod_curaCapelli/cura_uno.jpeg'),
+      titolo: 'Lozione Rigenerante',
+      testo: 'testo prodotto',
+      prezzo: '20',
+    },
+  ];
+  const data_accessori = [
+    {
+      id: '7',
+      image: require('../images/prod_accessori/accessorio_due.jpeg'),
+      titolo: 'Piastra Flesh',
+      testo:
+        'Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum. Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum.',
+      prezzo: '20',
+    },
+    {
+      id: '8',
+      image: require('../images/prod_accessori/accessorio_tre.jpeg'),
+      titolo: 'Spazzola',
+      testo: 'testo prodotto',
+      prezzo: '20',
+    },
+    {
+      id: '9',
+      image: require('../images/prod_accessori/accessorio_uno.jpeg'),
+      titolo: 'Phon Beauty',
+      testo: 'testo prodotto',
+      prezzo: '20',
+    },
+  ];
+  const data_pulizia = [];
+
+  const [openBellezza, setOpenBellezza] = useState(true);
+  const [openCuraCapelli, setOpenCuraCapelli] = useState(false);
+  const [openAccessori, setOpenAccessori] = useState(false);
+  const [openPulizia, setOpenPulizia] = useState(false);
+
+  function openCategory(category) {
+    switch (category) {
+      case 'Bellezza':
+        setOpenBellezza(true);
+        setOpenCuraCapelli(false);
+        setOpenAccessori(false);
+        setOpenPulizia(false);
+        break;
+      case 'CuraCapelli':
+        setOpenBellezza(false);
+        setOpenCuraCapelli(true);
+        setOpenAccessori(false);
+        setOpenPulizia(false);
+        break;
+      case 'Accessori':
+        setOpenBellezza(false);
+        setOpenCuraCapelli(false);
+        setOpenAccessori(true);
+        setOpenPulizia(false);
+        break;
+      case 'Pulizia':
+        setOpenBellezza(false);
+        setOpenCuraCapelli(false);
+        setOpenAccessori(false);
+        setOpenPulizia(true);
+        break;
+    }
+  }
+
+  /*----------------------------------------------------------------
+  LA FUNZIONE adCartByCheckbox PRENDE IN INGRESSO L'ELEMENTO
+  SELEZIONATO E UTILIZZA LA
+  FUNZIONE cartItems SCRITTA NEL ACTIONCREATOR PER INSERIRE GLI 
+  ELEMENTI NEL CARRELLO TRAMITE IL REDUCER cartReducer
+  ----------------------------------------------------------------*/
+
+  const elementiSelezionati = useSelector(
+    state => state.cartReducer.elementiSelezionati,
+  );
+  const cart = useSelector(state => state.cartReducer.cart);
+
+  function adCartByCheckbox(item) {
+    dispatch(cartItems({item}));
+  }
+
+  //console.log('presi dal redux', elementiSelezionati);
+  //console.log('elementi nel carrello', cart);
+
+  return (
+    <>
+      <DrawerMenuCustom />
+      <NavbarCustom pageTitol={'Shop'} />
+      {/* SEZIONE CARRELLO */}
+      <Carrello
+        prodotti={cart}
+        goTo={() => {
+          navigation.navigate('CartPage');
+        }}
+      />
+      {/* BOTTONI SELEZIONI CATEGORIA */}
+      <View style={styles.contButtonSelection}>
+        <TouchableOpacity onPress={() => openCategory('Bellezza')}>
+          <View
+            style={[
+              openBellezza ? styles.contSingleBtnOnClick : styles.contSingleBtn,
+            ]}>
+            <Text
+              style={[openBellezza ? styles.btnTextOnClick : styles.btnText]}>
+              BELLEZZA
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => openCategory('CuraCapelli')}>
+          <View
+            style={[
+              openCuraCapelli
+                ? styles.contSingleBtnOnClick
+                : styles.contSingleBtn,
+            ]}>
+            <Text
+              style={[
+                openCuraCapelli ? styles.btnTextOnClick : styles.btnText,
+              ]}>
+              CURA
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => openCategory('Pulizia')}>
+          <View
+            style={[
+              openPulizia ? styles.contSingleBtnOnClick : styles.contSingleBtn,
+            ]}>
+            <Text
+              style={[openPulizia ? styles.btnTextOnClick : styles.btnText]}>
+              PULIZIA
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => openCategory('Accessori')}>
+          <View
+            style={[
+              openAccessori
+                ? styles.contSingleBtnOnClick
+                : styles.contSingleBtn,
+            ]}>
+            <Text
+              style={[openAccessori ? styles.btnTextOnClick : styles.btnText]}>
+              ACCESSORI
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.contCardS}>
+        {openBellezza && data_bellezza.length > 0 ? (
+          <FlatList
+            data={data_bellezza}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={2} // Imposta il numero di colonne desiderato
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            renderItem={({item}) => {
+              return (
+                <CardShop
+                  img={item.image}
+                  titolo={item.titolo}
+                  onChange={() => adCartByCheckbox(item)}
+                  goToDetails={() => {
+                    navigation.navigate('ShopDetails', {item: item});
+                  }}
+                />
+              );
+            }}
+          />
+        ) : null}
+        {openCuraCapelli && data_curaCapelli.length > 0 ? (
+          <FlatList
+            data={data_curaCapelli}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={2} // Imposta il numero di colonne desiderato
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            renderItem={({item}) => {
+              return (
+                <CardShop
+                  img={item.image}
+                  titolo={item.titolo}
+                  onChange={() => adCartByCheckbox(item)}
+                  goToDetails={() => {
+                    navigation.navigate('ShopDetails', {item: item});
+                  }}
+                />
+              );
+            }}
+          />
+        ) : null}
+        {openAccessori && data_accessori.length > 0 ? (
+          <FlatList
+            data={data_accessori}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={2} // Imposta il numero di colonne desiderato
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            renderItem={({item}) => {
+              return (
+                <CardShop
+                  img={item.image}
+                  titolo={item.titolo}
+                  onChange={() => adCartByCheckbox(item)}
+                  goToDetails={() => {
+                    navigation.navigate('ShopDetails', {item: item});
+                  }}
+                />
+              );
+            }}
+          />
+        ) : null}
+        {openPulizia && data_pulizia.length > 0 ? (
+          <FlatList
+            data={data_pulizia}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={2} // Imposta il numero di colonne desiderato
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            renderItem={({item}) => {
+              return (
+                <CardShop
+                  img={item.image}
+                  titolo={item.titolo}
+                  onChange={() => adCartByCheckbox(item)}
+                  goToDetails={() => {
+                    navigation.navigate('ShopDetails', {item: item});
+                  }}
+                />
+              );
+            }}
+          />
+        ) : null}
+        {openBellezza && data_bellezza.length === 0 && (
+          <View style={styles.contVuoto}>
+            <Text style={styles.btnText}>
+              Ci dispiace al momento non ci sono prodotti disponibili
+            </Text>
+          </View>
+        )}
+        {openCuraCapelli && data_curaCapelli.length === 0 && (
+          <View>
+            <Text>Ci dispiace al momento non ci sono prodotti disponibili</Text>
+          </View>
+        )}
+        {openAccessori && data_accessori.length === 0 && (
+          <View>
+            <Text>Ci dispiace al momento non ci sono prodotti disponibili</Text>
+          </View>
+        )}
+        {openPulizia && data_pulizia.length === 0 && (
+          <View style={styles.contVuoto}>
+            <Text style={styles.btnText}>
+              Ci dispiace al momento non ci sono prodotti disponibili
+            </Text>
+          </View>
+        )}
+      </View>
+      <BottomTabMenuCustom />
+    </>
+  );
+};
+const styles = StyleSheet.create({
+  /*------------------------------------------------------
+              CSS BOTTONI SELEZIONE CATEGORIA
+  ------------------------------------------------------*/
+  contButtonSelection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginTop: '3%',
+  },
+  contSingleBtn: {
+    borderWidth: 2,
+    borderRadius: 20,
+    borderColor: Colors.hotel,
+    width: 150,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '3%',
+  },
+  contSingleBtnOnClick: {
+    borderWidth: 2,
+    borderRadius: 20,
+    borderColor: Colors.hotel,
+    width: 150,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '3%',
+    backgroundColor: Colors.hotel,
+  },
+  btnText: {
+    fontSize: RFValue(12),
+    color: Colors.gray,
+    fontWeight: '700',
+  },
+  btnTextOnClick: {
+    fontSize: RFValue(12),
+    color: Colors.white,
+    fontWeight: '700',
+  },
+  contVuoto:{
+    width:'100%',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center',
+    marginTop:'20%',
+  },
+  //-----------------------------------------------------
+  contCardS: {
+    marginBottom: 270,
+  },
+  conCart: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  styleImgCart: {
+    width: 25,
+    height: 25,
+    marginLeft: 30,
+    tintColor: Colors.hotel,
+  },
+  styleNumeri: {
+    fontSize: 12,
+    margin: 5,
+  },
+});
+export default Shop;
