@@ -1,0 +1,83 @@
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import {Colors} from '../../theme/theme';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import NavbarCustom from '../../component/NavbarCustom';
+import DrawerMenuCustom from '../../component/DrawerMenuCustom';
+import BottomTabMenuCustom from '../../component/BottomTabMenuCustom';
+import CardSemplice from '../../component/CardSemplice';
+import Carrello from '../../component/Carrello';
+import {useDispatch, useSelector} from 'react-redux';
+import {cartItems} from '../../redux/actionCreator';
+
+const ShopDetails = ({route}) => {
+
+    const item = route.params.item;
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const cart = useSelector(state => state.cartReducer.cart);
+
+    function adToCart(item) {
+      dispatch(cartItems({item}));
+    }
+
+    return (
+      <>
+        <NavbarCustom pageTitol={item.titolo} />
+        <DrawerMenuCustom />
+        <Carrello
+          prodotti={cart}
+          goTo={() => {
+            navigation.navigate('CartPage');
+          }}
+        />
+        <View style={styles.contAggiungi}>
+          <TouchableOpacity onPress={() => adToCart(item)}>
+            <Text style={styles.txtAggiungi}>AGGIUNGI AL CARRELLO</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contCardS}>
+          <CardSemplice
+            img={item.image}
+            titolo={item.titolo}
+            descrizione={item.testo}
+            prezzo={['Prezzo: ',item.prezzo,' €']}
+            btnText={'Paga ..'}
+          />
+        </View>
+        <BottomTabMenuCustom />
+      </>
+    );
+
+}
+const styles = StyleSheet.create({
+  contAggiungi: {
+    backgroundColor: Colors.hotel,
+    width: '50%',
+    alignItems: 'center',
+    borderRadius: 20,
+    zIndex: 1,
+    alignSelf: 'flex-end',
+    marginRight: '5%',
+    marginTop: '-9%',
+  },
+  txtAggiungi: {
+    color: Colors.white,
+    fontWeight: '700',
+    padding:'4%'
+  },
+  contCardS: {
+    marginBottom: 100,
+  },
+});
+export default ShopDetails
