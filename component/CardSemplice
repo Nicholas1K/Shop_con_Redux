@@ -1,0 +1,106 @@
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import {Colors} from '../theme/theme';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
+import ButtonGeneral from './ButtonGeneral';
+
+const CardSemplice = ({img, titolo, descrizione, prezzo,btnText}) => {
+  return (
+    <View style={styles.generalContCardG}>
+      <View style={styles.container}>
+        <Image source={img} style={styles.image} />
+      </View>
+      <ButtonGeneral titol={btnText} />
+      <View style={styles.contDesc}>
+        <ScrollView
+          style={styles.scrollDesc}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.contTitoloSimply}>
+            <Text style={styles.txtTitoloSimply}>{titolo}</Text>
+          </View>
+          <Text style={styles.txtDescrizioneSimply}>{descrizione}</Text>
+          <View style={styles.contPrezzoSimply}>
+            <Text style={styles.txtPrezzoSimply}>{prezzo}</Text>
+          </View>
+        </ScrollView>
+      </View>
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  generalContCardG: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    width: 350,
+    height: 200,
+    borderRadius: 10,
+    justifyContent: 'flex-start',
+    paddingTop: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden', //copre l'esubero dell'immagine quindi permette di fare vedere il borderRadius che senza non si sarebbe potuto vedere.
+    marginTop: 75,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  contDesc: {
+    width: '90%',
+    height: '70%',
+  },
+  scrollDesc: {
+    flex: 1,
+    marginBottom: 130,
+  },
+  /*----------------------------------------------------------------------
+                        CONTAINER E TESTO TITOLO  
+  ----------------------------------------------------------------------*/
+  contTitoloSimply: {
+    marginBottom: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  txtTitoloSimply: {
+    color: 'gray',
+    fontSize: RFValue(18),
+    fontWeight: '600',
+  },
+  /*----------------------------------------------------------------------
+                      TESTO DESCRIZIONE
+  ----------------------------------------------------------------------*/
+  txtDescrizioneSimply: {
+    color: 'gray',
+    fontSize: RFValue(14),
+    fontWeight: '400',
+  },
+  /*----------------------------------------------------------------------
+                       CONTAINER E TESTO PREZZO
+  ----------------------------------------------------------------------*/
+  contPrezzoSimply: {
+    marginTop: '5%',
+    marginBottom: '70%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  txtPrezzoSimply: {
+    color: 'gray',
+    fontSize: RFValue(15),
+    fontWeight: '400',
+  },
+});
+export default CardSemplice;
